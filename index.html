@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>مدیریت واحدها</title>
+<style>
+body { font-family: sans-serif; direction: rtl; padding: 20px; }
+.room { border:1px solid #ccc; padding:15px; border-radius:10px; margin-bottom:10px; }
+.btn { margin-top:10px; padding:6px 10px; border:none; background:black; color:white; border-radius:6px; cursor:pointer; }
+.status { margin-top:6px; font-weight:bold; }
+</style>
+</head>
+<body>
+
+<h2>مدیریت وضعیت واحدها</h2>
+<div id="list"></div>
+
+<script>
+let rooms = [1,2,3,4,5,6,7,8,9,10,11,12];
+
+let saved = JSON.parse(localStorage.getItem("units") || "{}");
+
+function save(){ localStorage.setItem("units", JSON.stringify(saved)); }
+
+function next(s){
+  if(s === "خالی") return "رزرو شده";
+  if(s === "رزرو شده") return "در حال نظافت";
+  return "خالی";
+}
+
+function render(){
+  let box = document.getElementById("list");
+  box.innerHTML = "";
+  rooms.forEach(r=>{
+    let st = saved[r] || "خالی";
+    let div = document.createElement("div");
+    div.className="room";
+    div.innerHTML = `
+      <div>واحد ${r}</div>
+      <div class="status">وضعیت: ${st}</div>
+      <button class="btn" onclick="change(${r})">تغییر وضعیت</button>
+    `;
+    box.appendChild(div);
+  });
+}
+
+function change(r){
+  let st = saved[r] || "خالی";
+  saved[r] = next(st);
+  save();
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>
