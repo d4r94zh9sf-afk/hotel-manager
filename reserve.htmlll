@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>فرم رزرو هتل آپارتمان</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "IRANSans", sans-serif;
+      background: #f3f4f6;
+      direction: rtl;
+    }
+    .wrapper {
+      max-width: 480px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 20px 18px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-size: 20px;
+      margin: 0 0 6px;
+      text-align: center;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+    input, select, textarea {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 9px 10px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-size: 13px;
+      outline: none;
+      background: #f9fafb;
+    }
+    textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #111827;
+      background: #ffffff;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+    .row > div {
+      flex: 1;
+    }
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 11px;
+      font-size: 14px;
+      font-weight: 600;
+      background: #111827;
+      color: #ffffff;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+    button:active {
+      transform: scale(0.98);
+    }
+    .note {
+      margin-top: 10px;
+      font-size: 11px;
+      color: #6b7280;
+      text-align: center;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  <div class="card">
+    <h1>درخواست رزرو</h1>
+    <div class="subtitle">هتل آپارتمان – دریاگوشه مازندران 🌊</div>
+
+    <form id="reserveForm">
+      <label for="fullName">نام و نام خانوادگی</label>
+      <input id="fullName" name="fullName" type="text" placeholder="مثلاً علی رضایی" required>
+
+      <label for="phone">شماره تماس (واتساپ)</label>
+      <input id="phone" name="phone" type="tel" placeholder="مثلاً 0912xxxxxxx" required>
+
+      <div class="row">
+        <div>
+          <label for="checkin">تاریخ ورود</label>
+          <input id="checkin" name="checkin" type="text" placeholder="مثلاً 1403/04/20" required>
+        </div>
+        <div>
+          <label for="checkout">تاریخ خروج</label>
+          <input id="checkout" name="checkout" type="text" placeholder="مثلاً 1403/04/23" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="guests">تعداد نفرات</label>
+          <input id="guests" name="guests" type="number" min="1" placeholder="مثلاً 3" required>
+        </div>
+        <div>
+          <label for="unit">واحد مورد نظر</label>
+          <select id="unit" name="unit">
+            <option value="">فرقی ندارد</option>
+            <option>واحد 1</option>
+            <option>واحد 2</option>
+            <option>واحد 3</option>
+            <option>واحد 4</option>
+            <option>واحد 5</option>
+            <option>واحد 6</option>
+            <option>واحد 7</option>
+            <option>واحد 8</option>
+            <option>واحد 9</option>
+            <option>واحد 10</option>
+            <option>واحد 11</option>
+            <option>واحد 12</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="note">توضیحات (اختیاری)</label>
+      <textarea id="note" name="note" placeholder="مثلاً همراه با کودک / طبقه پایین ترجیحاً / ساعت حدودی رسیدن"></textarea>
+
+      <button type="submit">ارسال درخواست از طریق واتساپ 📲</button>
+
+      <div class="note">
+        بعد از زدن دکمه، واتساپ باز می‌شود و پیام شما برای مدیریت هتل ارسال خواهد شد.
+        تا زمان تأیید نهایی، رزرو قطعی نیست.
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById("reserveForm");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const fullName = document.getElementById("fullName").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const checkin = document.getElementById("checkin").value.trim();
+    const checkout = document.getElementById("checkout").value.trim();
+    const guests = document.getElementById("guests").value.trim();
+    const unit = document.getElementById("unit").value;
+    const note = document.getElementById("note").value.trim();
+
+    let text = "درخواست رزرو جدید:%0A%0A";
+    text += "👤 نام: " + fullName + "%0A";
+    text += "📱 شماره تماس: " + phone + "%0A";
+    text += "📅 تاریخ ورود: " + checkin + "%0A";
+    text += "📅 تاریخ خروج: " + checkout + "%0A";
+    text += "👥 تعداد نفرات: " + guests + "%0A";
+    if (unit) {
+      text += "🏠 واحد انتخابی: " + unit + "%0A";
+    } else {
+      text += "🏠 واحد: فرقی ندارد%0A";
+    }
+    if (note) {
+      text += "%0A📝 توضیحات:%0A" + encodeURIComponent(note) + "%0A";
+    }
+
+    // شماره واتساپ: 09382382863 → با پیش‌شماره ایران برای واتساپ
+    const phoneWhatsApp = "989382382863";
+
+    const url = "https://wa.me/" + phoneWhatsApp + "?text=" + text;
+    window.location.href = url;
+  });
+</script>
+
+</body>
+</html>
